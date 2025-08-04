@@ -20,8 +20,9 @@ type Service struct {
 	StdIn *string  `yaml:"stdIn"`
 }
 
-func RunService(service *Service) {
-	cmd := exec.Command(service.Exec, service.Args...)
+func RunService(service *Service, args []string) {
+	allArgs := append(service.Args, args[1:]...)
+	cmd := exec.Command(service.Exec, allArgs...)
 	var stdin io.Reader
 	if service.StdIn == nil {
 		stdin = os.Stdin
@@ -76,7 +77,7 @@ func RunCommand(mf *MainFlags, args []string) {
 	serviceNameRun := args[0]
 	for _, s := range conf.Services {
 		if s.Name == serviceNameRun {
-			RunService(&s)
+			RunService(&s, args)
 			return
 		}
 	}
