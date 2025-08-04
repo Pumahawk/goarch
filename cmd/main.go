@@ -14,15 +14,19 @@ import (
 )
 
 type Service struct {
-	Name  string   `yaml:"name"`
-	Exec  string   `yaml:"exec"`
-	Args  []string `yaml:"args"`
-	StdIn *string  `yaml:"stdIn"`
+	Name             string   `yaml:"name"`
+	Exec             string   `yaml:"exec"`
+	Args             []string `yaml:"args"`
+	WorkingDirectory *string  `yaml:"working-directory"`
+	StdIn            *string  `yaml:"stdIn"`
 }
 
 func RunService(service *Service, args []string) {
 	allArgs := append(service.Args, args[1:]...)
 	cmd := exec.Command(service.Exec, allArgs...)
+	if service.WorkingDirectory != nil {
+		cmd.Dir = *service.WorkingDirectory
+	}
 	var stdin io.Reader
 	if service.StdIn == nil {
 		stdin = os.Stdin
