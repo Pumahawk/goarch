@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"os/signal"
 	"strings"
 
 	yaml "github.com/goccy/go-yaml"
@@ -30,7 +31,23 @@ func RunService(service *Service) {
 	cmd.Stdin = stdin
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
-	cmd.Run()
+	csign := make(chan os.Signal, 1)
+	signal.Notify(csign)
+	err := cmd.Start()
+	if err != nil {
+		log.Fatalf("[run] Unable to start process. %s", err)
+	}
+	go func() {
+		for s := range csign {
+			if cmd.Process != nil {
+				cmd.Process.Signal(s)
+			}
+		}
+	}()
+	cmd.Wait()
+	signal.Stop(csign)
+	close(csign)
+	os.Exit(cmd.ProcessState.ExitCode())
 }
 
 type Conf struct {
