@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"log"
 )
 
@@ -24,4 +26,14 @@ func RunCommand(mf *MainFlags, args []string) {
 		}
 	}
 	log.Fatalf("Service %s not found", serviceNameRun)
+}
+
+func LoadRunCommandFlags(args []string) (*LsCommandFlags, []string, error) {
+	var lsCommandFlags LsCommandFlags
+	fls := flag.NewFlagSet("", flag.ExitOnError)
+	err := fls.Parse(args)
+	if err != nil {
+		return nil, nil, fmt.Errorf("[LoadRunCommandFlags] Unable to parse falgs. %w", err)
+	}
+	return &lsCommandFlags, fls.Args(), nil
 }

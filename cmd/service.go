@@ -1,8 +1,6 @@
 package main
 
 import (
-	"flag"
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -52,14 +50,4 @@ func RunService(service *Service, args []string) {
 	signal.Stop(csign)
 	close(csign)
 	os.Exit(cmd.ProcessState.ExitCode())
-}
-
-func LoadRunCommandFlags(args []string) (*LsCommandFlags, []string, error) {
-	var lsCommandFlags LsCommandFlags
-	fls := flag.NewFlagSet("", flag.ExitOnError)
-	err := fls.Parse(args)
-	if err != nil {
-		return nil, nil, fmt.Errorf("[LoadRunCommandFlags] Unable to parse falgs. %w", err)
-	}
-	return &lsCommandFlags, fls.Args(), nil
 }
