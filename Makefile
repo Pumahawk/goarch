@@ -10,3 +10,6 @@ build: target/gorch
 
 clean:
 	rm -r target
+
+fmt:
+	go fmt $(shell git ls-files | grep -E \\.go$)

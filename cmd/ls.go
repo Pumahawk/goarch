@@ -1,9 +1,9 @@
 package main
 
 import (
-	"log"
-	"fmt"
 	"flag"
+	"fmt"
+	"log"
 )
 
 type LsCommandFlags struct {
@@ -32,4 +32,3 @@ func LoadLsCommandFlags(args []string) (*LsCommandFlags, []string, error) {
 	}
 	return &lsCommandFlags, fls.Args(), nil
 }
-

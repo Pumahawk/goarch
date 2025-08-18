@@ -63,4 +63,3 @@ func LoadRunCommandFlags(args []string) (*LsCommandFlags, []string, error) {
 	}
 	return &lsCommandFlags, fls.Args(), nil
 }
-
