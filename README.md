@@ -44,3 +44,7 @@ Mi vengono in mente 3 modalità del programma.
 - **Runner** - Il programma può eseguire direttamente un programma
 - **Daemon** - Il programma controlla l'esecuzione di altri programmi, si mette in ascolto del client.
 - **Client** - Il programma invia i comandi al Daemon per recuperare informazioni o eseguire programmi.
+
+## File di configurazione
+
+Il file di configurazione contiene le istruzioni sul come esegurie i programmi.
